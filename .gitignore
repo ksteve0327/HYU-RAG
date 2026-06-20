@@ -1,0 +1,17 @@
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local/raw data and generated RAG artifacts are intentionally excluded from the
+# public repository. Keep only sanitized fixtures under tests/fixtures/.
+test_data.csv
+patent_rawdata.csv
+data/
+artifacts/
+
+# Vendor/reference clones and source paper PDFs are local-only inputs.
+transformers/
+transformers-rag-paper/
+*.pdf
