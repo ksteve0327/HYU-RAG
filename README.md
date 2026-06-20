@@ -1,6 +1,6 @@
-# HYU US Patent RAG Demo
+# US Patent RAG Demo
 
-HYU 미국 특허 데이터를 사용해 Lewis et al.의 Retrieval-Augmented Generation(RAG) 구조를 실행해보는 데모 프로젝트입니다. 목표는 fine-tuning이나 정확도 최적화가 아니라, custom knowledge source 위에서 retrieval, `doc_scores`, context 구성, `RAG-Sequence`와 `RAG-Token`의 marginalization 흐름을 관찰하는 것입니다.
+미국 특허 데이터를 사용해 Lewis et al.의 Retrieval-Augmented Generation(RAG) 구조를 실행해보는 데모 프로젝트입니다. 목표는 fine-tuning이나 정확도 최적화가 아니라, custom knowledge source 위에서 retrieval, `doc_scores`, context 구성, `RAG-Sequence`와 `RAG-Token`의 marginalization 흐름을 관찰하는 것입니다.
 
 ## 주요 기능
 
