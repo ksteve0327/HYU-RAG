@@ -1079,6 +1079,8 @@ def render_html(
       --task-soft: #eef2ff;
       --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
     }}
+    *, *::before, *::after {{ box-sizing: border-box; }}
+    html, body {{ max-width: 100%; overflow-x: hidden; }}
     body {{
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -1092,7 +1094,7 @@ def render_html(
       color: #fff;
     }}
     header p {{ max-width: 920px; color: #d6deea; margin: 8px 0 0; }}
-    main {{ max-width: 1180px; margin: 0 auto; padding: 28px 24px 56px; }}
+    main {{ max-width: 1180px; min-width: 0; margin: 0 auto; padding: 28px 24px 56px; }}
     h1, h2, h3, h4 {{ margin: 0 0 10px; line-height: 1.25; }}
     h2 {{ font-size: 22px; }}
     h3 {{ font-size: 18px; }}
@@ -1102,22 +1104,23 @@ def render_html(
     .metric {{ background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; box-shadow: var(--shadow); }}
     .metric span {{ display: block; color: var(--muted); font-size: 13px; margin-bottom: 6px; }}
     .metric strong {{ font-size: 18px; }}
-    .panel, .trace {{ background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }}
+    .panel, .trace {{ min-width: 0; max-width: 100%; overflow: hidden; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }}
     .trace {{ padding: 22px; }}
     .build-panel p {{ max-width: 980px; }}
     .build-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 16px; }}
     .build-grid > div {{ border: 1px solid var(--line); border-radius: 8px; padding: 16px; background: #fbfcff; }}
     .detail-panel > p {{ max-width: 980px; }}
-    .detail-section {{ margin-top: 22px; }}
+    .detail-section {{ min-width: 0; max-width: 100%; margin-top: 22px; }}
     .detail-section h3 {{ margin-bottom: 6px; }}
     .step-list, .flow-list {{ margin: 0; padding-left: 20px; }}
     .step-list li, .flow-list li {{ margin-bottom: 8px; }}
     .flow {{ margin-top: 18px; border-top: 1px solid var(--line); padding-top: 16px; }}
     .commands {{ margin-top: 16px; border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; background: #fbfcff; }}
     .commands summary {{ cursor: pointer; font-weight: 700; color: #344054; }}
-    pre {{ overflow-x: auto; margin: 12px 0 0; background: #101828; color: #e4e7ec; border-radius: 8px; padding: 14px; font-size: 12px; line-height: 1.5; }}
-    pre code {{ background: transparent; border: 0; padding: 0; color: inherit; }}
-    .code-example {{ margin-top: 10px; }}
+    pre {{ max-width: 100%; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; margin: 12px 0 0; background: #101828; color: #e4e7ec; border-radius: 8px; padding: 14px; font-size: 12px; line-height: 1.5; }}
+    pre code {{ display: block; white-space: inherit; overflow-wrap: inherit; word-break: inherit; background: transparent; border: 0; padding: 0; color: inherit; }}
+    .code-example {{ min-width: 0; max-width: 100%; margin-top: 10px; }}
+    .code-example pre {{ white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; }}
     .code-card {{ border: 1px solid var(--line); border-radius: 8px; margin-top: 10px; background: #fbfcff; overflow: hidden; }}
     .code-card summary {{ cursor: pointer; padding: 12px 14px; font-weight: 700; color: #344054; }}
     .code-card summary span {{ display: block; margin-top: 3px; color: var(--muted); font-size: 12px; font-weight: 500; }}
@@ -1128,16 +1131,22 @@ def render_html(
     .result-subblock h4 {{ margin-top: 14px; }}
     .result-subblock h4:first-child {{ margin-top: 0; }}
     .result-table {{ margin-top: 10px; }}
-    .table-wrap {{ overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }}
-    table {{ width: 100%; border-collapse: collapse; font-size: 13px; }}
+    .table-wrap {{ width: 100%; min-width: 0; max-width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }}
+    table {{ width: 100%; table-layout: fixed; border-collapse: collapse; font-size: 13px; }}
     th {{ background: #f1f4f8; text-align: left; color: #344054; font-weight: 650; }}
-    th, td {{ padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }}
+    th, td {{ padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: anywhere; word-break: break-word; }}
     tr:last-child td {{ border-bottom: 0; }}
-    .kv-table th {{ width: 210px; white-space: nowrap; }}
-    .kv-table td {{ min-width: 360px; }}
-    .trace-example {{ display: grid; gap: 12px; }}
+    .kv-table th {{ width: clamp(120px, 24%, 210px); white-space: normal; }}
+    .kv-table td {{ min-width: 0; }}
+    .trace-example {{ display: grid; min-width: 0; max-width: 100%; gap: 12px; }}
     .trace-subexample {{ margin-top: 4px; }}
     .compact table {{ font-size: 12px; }}
+    .trace-example .compact th:first-child,
+    .trace-example .compact td:first-child {{ width: 86px; }}
+    .trace-example .compact th:nth-child(2),
+    .trace-example .compact td:nth-child(2) {{ width: 130px; }}
+    .trace-example .compact th:nth-child(3),
+    .trace-example .compact td:nth-child(3) {{ width: 140px; }}
     .badge {{ display: inline-flex; align-items: center; border-radius: 999px; padding: 2px 8px; font-size: 12px; font-weight: 650; white-space: nowrap; }}
     .badge-model {{ background: var(--accent-soft); color: var(--accent); }}
     .badge-task {{ background: var(--task-soft); color: #3730a3; }}
